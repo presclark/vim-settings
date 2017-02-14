@@ -13,6 +13,9 @@ let g:ctrlp_custom_ignore = {
   \ }
 
 set termguicolors
+" set Vim-specific sequences for RGB colors
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 set ignorecase          " Case insensitive matching.
 set nowrap
 set noerrorbells        " No beeps.
