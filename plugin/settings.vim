@@ -3,7 +3,7 @@ imap ,s <esc>:update<cr>
 vmap ,s <esc>:update<cr>
 
 map <F11> <esc>:NERDTreeToggle<cr>
-map <F12> <esc>:Bufferlist<cr>
+map <F12> <esc>:CtrlPBuffer<cr>
 map <Leader>t <esc>:CtrlP<cr>
 
 let g:ctrlp_root_markers = ['.ctrlp', '.git', '.root', '.editorconfig']
