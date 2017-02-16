@@ -1,17 +1,3 @@
-nmap ,s <esc>:update<cr>
-imap ,s <esc>:update<cr>
-vmap ,s <esc>:update<cr>
-
-map <F11> <esc>:NERDTreeToggle<cr>
-map <F12> <esc>:CtrlPBuffer<cr>
-map <Leader>t <esc>:CtrlP<cr>
-
-let g:ctrlp_root_markers = ['.ctrlp', '.git', '.root', '.editorconfig']
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/](.git|.hg|.svn|bin|obj)$',
-  \ 'file': '\v\.(exe|so|dll)$',
-  \ }
-
 set termguicolors
 set ignorecase          " Case insensitive matching.
 set nowrap
@@ -29,14 +15,29 @@ set noswapfile
 set wildmode=list:longest " Path/file expansion in colon-mode.
 set wildignore=*.o,obj,*.exe,*.pyc,*.swp,*.zip,*.dll,concrete*,vendor*,node_modules*,min*,img*,laravel*,files*,markup*,doctrine*,ignore*
 set wildchar=<TAB>
+set autochdir
+set cursorline
 
-if exists('+colorcolumn')
-	highlight ColorColumn ctermbg=66
-	" set colorcolumn=100
-	" set wrapmargin=100
-endif
+" Preserve visual selection when indenting
+vnoremap < <gv
+vnoremap > >gv
 
-" From an idea by Michael Naumann
+nmap ,s <esc>:update<cr>
+imap ,s <esc>:update<cr>
+vmap ,s <esc>:update<cr>
+
+map <F11> <esc>:NERDTreeToggle<cr>
+map <F12> <esc>:CtrlPBuffer<cr>
+map <Leader>t <esc>:CtrlP<cr>
+map <Leader>lc <esc>:SyntasticCheck<cr>
+map <Leader>lf <esc>:PhpFmt<cr>
+
+"Basically you press * or # to search for the current selection !! Really useful
+vnoremap <silent> * :call VisualSearch('f')<CR>
+vnoremap <silent> # :call VisualSearch('b')<CR>
+
+
+" CUSTOM FUNCTIONS
 function! VisualSearch(direction) range
   let l:saved_reg = @"
   execute "normal! vgvy"
@@ -51,7 +52,28 @@ function! VisualSearch(direction) range
   let @" = l:saved_reg
 endfunction
 
-"Basically you press * or # to search for the current selection !! Really useful
-vnoremap <silent> * :call VisualSearch('f')<CR>
-vnoremap <silent> # :call VisualSearch('b')<CR>
 
+" PLUGIN-SPECIFIC VARIABLES AND OVERRIDES
+let g:ctrlp_root_markers = ['.ctrlp', '.git', '.root', '.editorconfig']
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](.git|.hg|.svn|bin|obj)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ }
+
+if exists('+colorcolumn')
+	highlight ColorColumn ctermbg=66
+	" set colorcolumn=100
+	" set wrapmargin=100
+endif
+
+" PHP linting options (lc == lint check, lf == lint fix)
+let g:syntastic_php_checkers=['php', 'phpcs']
+let g:syntastic_php_phpcs_args='--standard=PSR2 -n'
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [], 'passive_filetypes': [] }
+
+let g:phpfmt_standard = 'PSR2'
+let g:phpfmt_autosave = 0
