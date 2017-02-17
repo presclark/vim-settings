@@ -17,6 +17,7 @@ set wildignore=*.o,obj,*.exe,*.pyc,*.swp,*.zip,*.dll,concrete*,vendor*,node_modu
 set wildchar=<TAB>
 set autochdir
 set cursorline
+set autoindent
 
 " Preserve visual selection when indenting
 vnoremap < <gv
